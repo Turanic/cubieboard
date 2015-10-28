@@ -127,14 +127,14 @@ $(LINUX_DIR)/arch/arm/boot/uImage: $(LINUX_DIR)/.config
 	ARCH=arm \
 	CROSS_COMPILE=$(GCC_PREFIX) \
 	-j $(JOBS) \
-	uImage modules LOADADDR=0x40008000
+	uImage modules LOADADDR=$(LOADADDR)
 
 $(LINUX_DIR)/arch/arm/boot/dts/$(DTB): $(LINUX_DIR)/arch/arm/boot/dts/$(DTS) $(LINUX_DIR)/.config
 	cd $(LINUX_DIR) && make \
 	ARCH=arm \
 	CROSS_COMPILE=$(GCC_PREFIX) \
 	-j $(JOBS) \
-	dtbs LOADADDR=0x40008000
+	dtbs LOADADDR=$(LOADADDR)
 
 # with_grsecurity:
 # 	cd $(LINUX_DIR) && make ARCH=arm CROSS_COMPILE=$(GCC_PREFIX) -j $(JOBS) uImage modules
@@ -167,6 +167,7 @@ u-boot_distclean:
 
 boot.cmd: boot.cmd.in makefile.vars
 	$(SED) 's/@DTB@/$(DTB)/g' $< > $@
+	$(SED) -i 's/@LOADADDR@/$(LOADADDR)/g' $@
 
 debootstrap: boot.cmd
 	./make_debootstrap.sh all
