@@ -118,6 +118,9 @@ build_image()
         sudo /sbin/mkfs."$FS_TYPE" "$LOOP_DEV"3
     fi
 
+# flushing buffers
+    sync
+
 # free internal loop device ...
     sudo /sbin/kpartx -d -p "$TMP_VAL" "$IMG_NAME"
 
