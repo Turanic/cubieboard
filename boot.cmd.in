@@ -2,4 +2,4 @@ setenv bootargs console=ttyS0,115200 earlyprintk hdmi.audio=EDID:0 disp.screen0_
 #ext2load mmc 0 0x43000000 boot/script.bin
 ext2load mmc 0 @LOADADDR@ boot/uImage
 ext2load mmc 0 0x49000000 boot/@DTB@
-bootm 0x46000000 - 0x49000000
+bootm @LOADADDR@ - 0x49000000
